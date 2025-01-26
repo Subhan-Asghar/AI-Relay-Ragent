@@ -3,7 +3,7 @@ from agent import get_reponse
 from flask_cors import CORS
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/api": {"origins": "https://ai-relay.vercel.app"}})
 
 @app.route('/api', methods=['POST'])
 def greet():
