@@ -40,7 +40,7 @@ function App() {
     try {
       console.log(messages);
       console.log(ChatHistory);
-      axios.post("http://127.0.0.1:5000/api", { ChatHistory })
+      axios.post("https://ai-relay-server.vercel.app/api", { ChatHistory })
         .then((res) => {
           const result = res.data;
           console.log(result)
