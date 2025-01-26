@@ -1,35 +1,34 @@
-import { useState ,useEffect,useRef} from 'react';
+import { useState, useEffect, useRef } from "react";
 
 function App() {
-  const [messages, setMessages] = useState([]); // State to store messages
-  const [input, setInput] = useState(""); // State to store user input
-  const messagesEndRef = useRef(null); // Ref for auto-scroll
+  const [messages, setMessages] = useState([]);
+  const [ChatHistory, setChatHistory] = useState([]);
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef(null);
 
-  // Function to handle message submission
   const handleSendMessage = () => {
     if (input.trim()) {
-      setMessages([...messages, input]); // Add new message to the list
-      setInput(""); // Clear input field
+      setMessages([...messages, { type: "user", content: input }]);
+      setChatHistory([...ChatHistory, `HumanMessage(content=${input})`]);
+      setInput("");
     }
   };
 
-  // Scroll to the bottom of the chat when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
     <>
-    
       <nav className="flex items-center justify-between bg-black p-4">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <img
-            src="/logo-2LzXSqsyE-transformed.png" 
+            src="/logo-2LzXSqsyE-transformed.png"
             alt="logo"
             className="h-8 w-8 object-cover rounded-full border-2 border-yellow-500"
           />
-          <div className="text-yellow-500 text-lg font-bold ">Rely</div>
+          <div className="text-yellow-500 text-lg font-bold">Rely</div>
         </div>
 
         {/* Button */}
@@ -37,16 +36,27 @@ function App() {
           New Chat
         </button>
       </nav>
-       {/* Chat Section */}
-       <div className="flex flex-col h-[calc(100vh-64px)] p-4 bg-gray-100">
+
+      {/* Chat Section */}
+      <div className="flex flex-col h-[calc(100vh-64px)] p-4 bg-gray-100">
         {/* Messages Display */}
         <div className="flex-1 overflow-y-auto bg-white rounded-lg shadow p-4">
           {messages.map((message, index) => (
             <div
               key={index}
-              className="mb-2 p-2 bg-yellow-200 rounded-md shadow-sm text-black"
+              className={`flex ${
+                message.type === "user" ? "justify-end" : "justify-start"
+              } mb-4`}
             >
-              {message}
+              <div
+                className={`max-w-xs px-4 py-2 rounded-lg shadow-md ${
+                  message.type === "user"
+                    ? "bg-yellow-400 text-black"
+                    : "bg-gray-200 text-gray-800"
+                }`}
+              >
+                {message.content}
+              </div>
             </div>
           ))}
           <div ref={messagesEndRef} />
@@ -70,7 +80,6 @@ function App() {
           </button>
         </div>
       </div>
-      
     </>
   );
 }
