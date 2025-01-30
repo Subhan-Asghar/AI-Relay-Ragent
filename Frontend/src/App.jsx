@@ -48,7 +48,7 @@ function App() {
           console.log(result)
           setMessages([...messages, { type: "ai", content: result.message }]);
           chat_history_ai(result.message);
-          setIsUserMessageSent(false); // Reset the flag after response
+          setIsUserMessageSent(false); 
         });
     } catch (err) {
       console.log("error", err);
@@ -77,7 +77,7 @@ function App() {
       </nav>
 
       {/* Chat Section */}
-<div className="flex flex-col h-[calc(100vh-64px)] p-4 bg-gray-100">
+<div className="flex flex-col h-[calc(100vh-72px)] p-4 bg-gray-100">
   {/* Messages Display */}
   <div className="flex-1 overflow-y-auto bg-white rounded-lg shadow p-4 space-y-4">
     {messages.map((message, index) => (
